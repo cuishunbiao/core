@@ -51,15 +51,17 @@ export const hydrate = ((...args) => {
 }) as RootHydrateFunction
 
 export const createApp = ((...args) => {
+  debugger
   const app = ensureRenderer().createApp(...args)
 
   if (__DEV__) {
     injectNativeTagCheck(app)
   }
-
+  debugger
   const { mount } = app
+  //重写 mount 方法
   app.mount = (containerOrSelector: Element | ShadowRoot | string): any => {
-    const container = normalizeContainer(containerOrSelector)
+    const container = normalizeContainer(containerOrSelector) //标准化容器
     if (!container) return
     const component = app._component
     if (!isFunction(component) && !component.render && !component.template) {

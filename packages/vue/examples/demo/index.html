@@ -1,0 +1,36 @@
+<script src="../../dist/vue.global.js"></script>
+<div id="indexDemo">
+    <h1>Vue3 Page {{hello1}}</h1>
+    <p>{{abc}}</p>
+    <!-- <div v-for="item in lists">{{item.text}}/{{item.id}}/{{hello1}}</div> -->
+</div>
+<script>
+    const { createApp, ref, reactive, watch } = Vue
+    createApp({
+        setup() {
+            const hello1 = ref('this is Vue3');
+            // const lists = reactive([
+            //     {
+            //         id: 1,
+            //         text: 'text1'
+            //     },
+            //     {
+            //         id: 2,
+            //         text: 'text2'
+            //     },
+            //     {
+            //         id: 3,
+            //         text: 'text3'
+            //     }
+            // ])
+
+            // watch(){
+                
+            // }
+
+            return { hello1, abc }
+        }
+    },{
+        title:'index.html'
+    }).mount("#indexDemo")
+</script>
