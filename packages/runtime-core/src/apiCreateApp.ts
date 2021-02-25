@@ -131,9 +131,29 @@ export function createAppAPI<HostElement>(
       rootProps = null
     }
 
+    /** 
+     * 返回一些初始值；
+     *     
+      app: null as any,
+      config: {
+        isNativeTag: NO,
+        performance: false,
+        globalProperties: {},
+        optionMergeStrategies: {},
+        isCustomElement: NO,
+        errorHandler: undefined,
+        warnHandler: undefined
+      },
+      mixins: [],
+      components: {},
+      directives: {},
+      provides: Object.create(null)
+     * */
     const context = createAppContext()
+    //初始化 一个 Set() 赋值给 installedPlugins，做为插件安装使用
     const installedPlugins = new Set()
 
+    //初始化 isMounted 为 false, 加载状态为 false;
     let isMounted = false
 
     const app: App = (context.app = {
@@ -226,7 +246,9 @@ export function createAppAPI<HostElement>(
       },
 
       mount(rootContainer: HostElement, isHydrate?: boolean): any {
+        debugger
         if (!isMounted) {
+          debugger
           const vnode = createVNode(
             rootComponent as ConcreteComponent,
             rootProps

@@ -1,14 +1,24 @@
 <script src="../../dist/vue.global.js"></script>
+<style>
+    [v-cloak] {
+        display: none;
+    }
+</style>
 <div id="indexDemo">
-    <h1>Vue3 Page {{hello1}}</h1>
-    <p>{{abc}}</p>
+    <div id="vuedemo" v-cloak>
+        <p>{{hello1}}</p>
+        <div ref="full">{{fullText}}</div>
+    </div>
     <!-- <div v-for="item in lists">{{item.text}}/{{item.id}}/{{hello1}}</div> -->
 </div>
 <script>
-    const { createApp, ref, reactive, watch } = Vue
+    const { createApp, ref, reactive, watch, onMounted } = Vue
     createApp({
         setup() {
             const hello1 = ref('this is Vue3');
+            const full = ref(null)
+            const fullText = ref('完成')
+
             // const lists = reactive([
             //     {
             //         id: 1,
@@ -25,12 +35,16 @@
             // ])
 
             // watch(){
-                
+
             // }
 
-            return { hello1, abc }
+            onMounted(() => {
+                full.value.style.color = '#000';
+            })
+
+            return { hello1, full, fullText }
         }
-    },{
-        title:'index.html'
-    }).mount("#indexDemo")
+    }, {
+        title: 'index.html'
+    }).mount("#vuedemo")
 </script>
