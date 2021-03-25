@@ -1233,6 +1233,7 @@ function baseCreateRenderer(
     isSVG,
     optimized
   ) => {
+    //实例化组件
     const instance: ComponentInternalInstance = (initialVNode.component = createComponentInstance(
       initialVNode,
       parentComponent,

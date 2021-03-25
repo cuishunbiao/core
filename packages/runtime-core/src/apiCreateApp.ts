@@ -154,7 +154,6 @@ export function createAppAPI<HostElement>(
 
     //初始化 isMounted 为 false, 加载状态为 false;
     let isMounted = false
-
     const app: App = (context.app = {
       _uid: uid++,
       _component: rootComponent as ConcreteComponent,
