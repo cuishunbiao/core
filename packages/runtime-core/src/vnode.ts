@@ -295,7 +295,6 @@ const createVNodeWithArgsTransform = (
   //     ? vnodeArgsTransformer(args, currentRenderingInstance)
   //     : args)
   // )
-  // debugger
   return _createVNode(
     ...(vnodeArgsTransformer
       ? vnodeArgsTransformer(args, currentRenderingInstance)

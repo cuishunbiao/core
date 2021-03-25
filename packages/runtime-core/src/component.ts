@@ -406,7 +406,6 @@ export function createComponentInstance(
   parent: ComponentInternalInstance | null,
   suspense: SuspenseBoundary | null
 ) {
-  debugger
   const type = vnode.type as ConcreteComponent
   // inherit parent app context - or - if root, adopt from root vnode
   const appContext =
@@ -517,11 +516,11 @@ export function setupComponent(
   instance: ComponentInternalInstance,
   isSSR = false
 ) {
-  debugger
   isInSSRComponentSetup = isSSR
 
   const { props, children, shapeFlag } = instance.vnode
   const isStateful = shapeFlag & ShapeFlags.STATEFUL_COMPONENT
+  debugger
   initProps(instance, props, isStateful, isSSR)
   initSlots(instance, children)
 
@@ -536,7 +535,6 @@ function setupStatefulComponent(
   instance: ComponentInternalInstance,
   isSSR: boolean
 ) {
-  debugger
   const Component = instance.type as ComponentOptions
 
   if (__DEV__) {
@@ -560,7 +558,6 @@ function setupStatefulComponent(
   instance.accessCache = Object.create(null)
   // 1. create public instance / render proxy
   // also mark it raw so it's never observed
-  debugger
   instance.proxy = new Proxy(instance.ctx, PublicInstanceProxyHandlers)
   if (__DEV__) {
     exposePropsOnRenderContext(instance)

@@ -82,7 +82,6 @@ export function renderComponentVNode(
   vnode: VNode,
   parentComponent: ComponentInternalInstance | null = null
 ): SSRBuffer | Promise<SSRBuffer> {
-  debugger
   const instance = createComponentInstance(vnode, parentComponent, null)
   const res = setupComponent(instance, true /* isSSR */)
   const hasAsyncSetup = isPromise(res)
