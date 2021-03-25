@@ -8,13 +8,22 @@
     {{num}}/{{doubbleCount}}
 </div>
 <script>
-    const { ref, createApp, computed, reactive, toRefs } = Vue
+    debugger
+    const { ref, createApp, computed, reactive, toRefs, effect } = Vue
     createApp({
         setup() {
             const num = ref(1);
-            const doubbleCount = computed(()=>num.value+1);
+            const doubbleCount = computed(()=>num.value+1)
 
-            console.log(doubbleCount.value);
+
+            effect(() => {
+                console.log(num.value + doubbleCount.value) 
+            }) 
+
+            function plus() { 
+                count.value++ 
+            } 
+            plus()
 
             return{
                 num,

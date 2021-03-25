@@ -21,7 +21,9 @@ export interface WritableComputedOptions<T> {
 }
 
 class ComputedRefImpl<T> {
+  //缓存结果值
   private _value!: T
+  //是不是脏数据？
   private _dirty = true
 
   public readonly effect: ReactiveEffect<T>
@@ -34,11 +36,15 @@ class ComputedRefImpl<T> {
     private readonly _setter: ComputedSetter<T>,
     isReadonly: boolean
   ) {
+    //创建副作用函数
     this.effect = effect(getter, {
+      //true 函数延迟执行
       lazy: true,
+      //执行函数
       scheduler: () => {
         if (!this._dirty) {
           this._dirty = true
+          //派发通知
           trigger(toRaw(this), TriggerOpTypes.SET, 'value')
         }
       }
@@ -48,6 +54,7 @@ class ComputedRefImpl<T> {
   }
 
   get value() {
+    //如果是脏数据，则需要执行副作用函数
     if (this._dirty) {
       this._value = this.effect()
       this._dirty = false
@@ -57,6 +64,7 @@ class ComputedRefImpl<T> {
   }
 
   set value(newValue: T) {
+    //设置新值
     this._setter(newValue)
   }
 }
@@ -68,22 +76,25 @@ export function computed<T>(
 export function computed<T>(
   getterOrOptions: ComputedGetter<T> | WritableComputedOptions<T>
 ) {
-  debugger
+  //定义 getter 和 setter
   let getter: ComputedGetter<T>
   let setter: ComputedSetter<T>
-
+  //先判断是否是函数？
   if (isFunction(getterOrOptions)) {
+    //把我们写的 computed函数 赋值给 getter
     getter = getterOrOptions
+    //如果是开发环境赋值 一个包含错误信息的函数，如果是生产环境，赋值一个空函数
     setter = __DEV__
       ? () => {
           console.warn('Write operation failed: computed value is readonly')
         }
       : NOOP
   } else {
+    //如果我们是以第二种方式传入的参数，那就直接赋值对应的 getter 和 setter
     getter = getterOrOptions.get
     setter = getterOrOptions.set
   }
-
+  //返回一个类，收集依赖、派发事件
   return new ComputedRefImpl(
     getter,
     setter,
