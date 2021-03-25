@@ -1,0 +1,35 @@
+<script src="../../dist/vue.global.js"></script>
+<script id="item-template">
+    <p>{{treeName}}</p>
+</script>
+<script>
+    const tree = {
+        name: 'Tree', // necessary for self-reference
+        template: '#item-template',
+        props: {
+            treeName: String
+        },
+        setup(props){
+            
+        }
+    }
+</script>
+
+<div id="demo">
+    <tree :treeName="treeName"></tree>
+</div>
+<script>
+    const {createApp,ref,reactive,onMounted} = Vue;
+
+    createApp({
+        setup(){
+            let treeName = ref(treeName)
+            return{
+                treeName,
+            }
+        },
+        components:{
+
+        }
+    }).mount('#demo')
+</script>

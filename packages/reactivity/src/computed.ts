@@ -68,6 +68,7 @@ export function computed<T>(
 export function computed<T>(
   getterOrOptions: ComputedGetter<T> | WritableComputedOptions<T>
 ) {
+  debugger
   let getter: ComputedGetter<T>
   let setter: ComputedSetter<T>
 

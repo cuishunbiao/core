@@ -401,17 +401,22 @@ const emptyAppContext = createAppContext()
 
 let uid = 0
 
+//创建组件实例
+//传入三个参数，VNode 、父组件实例、是否等待加载
 export function createComponentInstance(
   vnode: VNode,
   parent: ComponentInternalInstance | null,
   suspense: SuspenseBoundary | null
 ) {
-  debugger
+  //VNode 类型
   const type = vnode.type as ConcreteComponent
   // inherit parent app context - or - if root, adopt from root vnode
+  //继承父组件实例的 appContext ，如果是根组件，则从根 VNode 中取
   const appContext =
     (parent ? parent.appContext : vnode.appContext) || emptyAppContext
 
+  //初始化当前组件实例
+  //实例中添加了很多属性，uid、vnode、数据、是否挂载、是否卸载、生命周期等等...
   const instance: ComponentInternalInstance = {
     uid: uid++,
     vnode,
@@ -483,7 +488,9 @@ export function createComponentInstance(
   } else {
     instance.ctx = { _: instance }
   }
+  //声明是否是根组件
   instance.root = parent ? parent.root : instance
+  //派发事件
   instance.emit = emit.bind(null, instance)
 
   return instance
@@ -513,30 +520,35 @@ export function validateComponentName(name: string, config: AppConfig) {
 
 export let isInSSRComponentSetup = false
 
+//设置组件，传入实例和是否服务端渲染
 export function setupComponent(
   instance: ComponentInternalInstance,
   isSSR = false
 ) {
-  debugger
+  //判断是不是服务器渲染
   isInSSRComponentSetup = isSSR
 
+  //结构数据和子组件和状态
   const { props, children, shapeFlag } = instance.vnode
+  //判断是否是有状态的
   const isStateful = shapeFlag & ShapeFlags.STATEFUL_COMPONENT
+  //初始化 props 和 slots
   initProps(instance, props, isStateful, isSSR)
   initSlots(instance, children)
-
+  //根据 isStateful 来创建有状态的组件
   const setupResult = isStateful
     ? setupStatefulComponent(instance, isSSR)
     : undefined
   isInSSRComponentSetup = false
+  // 并返回结果
   return setupResult
 }
 
+//设置有状态组件
 function setupStatefulComponent(
   instance: ComponentInternalInstance,
   isSSR: boolean
 ) {
-  debugger
   const Component = instance.type as ComponentOptions
 
   if (__DEV__) {
@@ -557,10 +569,10 @@ function setupStatefulComponent(
     }
   }
   // 0. create render proxy property access cache
+  //渲染代理的属性访问缓存
   instance.accessCache = Object.create(null)
   // 1. create public instance / render proxy
   // also mark it raw so it's never observed
-  debugger
   instance.proxy = new Proxy(instance.ctx, PublicInstanceProxyHandlers)
   if (__DEV__) {
     exposePropsOnRenderContext(instance)
@@ -571,6 +583,7 @@ function setupStatefulComponent(
     const setupContext = (instance.setupContext =
       setup.length > 1 ? createSetupContext(instance) : null)
 
+    //赋值当前实例
     currentInstance = instance
     pauseTracking()
     const setupResult = callWithErrorHandling(
@@ -599,9 +612,11 @@ function setupStatefulComponent(
         )
       }
     } else {
+      //处理 setup 结果
       handleSetupResult(instance, setupResult, isSSR)
     }
   } else {
+    //完成组件 设置
     finishComponentSetup(instance, isSSR)
   }
 }
