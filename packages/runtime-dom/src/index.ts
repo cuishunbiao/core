@@ -13,6 +13,7 @@ import { nodeOps } from './nodeOps'
 import { patchProp, forcePatchProp } from './patchProp'
 // Importing from the compiler, will be tree-shaken in prod
 import { isFunction, isString, isHTMLTag, isSVGTag, extend } from '@vue/shared'
+import { debug } from 'console'
 
 declare module '@vue/reactivity' {
   export interface RefUnwrapBailTypes {
@@ -51,13 +52,11 @@ export const hydrate = ((...args) => {
 }) as RootHydrateFunction
 
 export const createApp = ((...args) => {
-  debugger
   const app = ensureRenderer().createApp(...args)
 
   if (__DEV__) {
     injectNativeTagCheck(app)
   }
-  debugger
   const { mount } = app
   //重写 mount 方法
   app.mount = (containerOrSelector: Element | ShadowRoot | string): any => {

@@ -290,6 +290,11 @@ export function transformVNodeArgs(transformer?: typeof vnodeArgsTransformer) {
 const createVNodeWithArgsTransform = (
   ...args: Parameters<typeof _createVNode>
 ): VNode => {
+  // console.log(
+  //   ...(vnodeArgsTransformer
+  //     ? vnodeArgsTransformer(args, currentRenderingInstance)
+  //     : args)
+  // )
   return _createVNode(
     ...(vnodeArgsTransformer
       ? vnodeArgsTransformer(args, currentRenderingInstance)
@@ -421,7 +426,6 @@ function _createVNode(
   if (__DEV__ && vnode.key !== vnode.key) {
     warn(`VNode created with invalid key (NaN). VNode type:`, vnode.type)
   }
-
   normalizeChildren(vnode, children)
 
   // normalize suspense children

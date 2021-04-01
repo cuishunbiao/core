@@ -134,6 +134,7 @@ export function initProps(
   isStateful: number, // result of bitwise flag comparison
   isSSR = false
 ) {
+  debugger
   const props: Data = {}
   const attrs: Data = {}
   def(attrs, InternalObjectKey, 1)
@@ -273,6 +274,7 @@ function setFullProps(
   props: Data,
   attrs: Data
 ) {
+  debugger
   const [options, needCastKeys] = instance.propsOptions
   if (rawProps) {
     for (const key in rawProps) {
@@ -351,6 +353,7 @@ export function normalizePropsOptions(
   appContext: AppContext,
   asMixin = false
 ): NormalizedPropsOptions {
+  debugger
   if (!appContext.deopt && comp.__props) {
     return comp.__props
   }
