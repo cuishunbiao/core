@@ -10,6 +10,7 @@
     "size": "node scripts/build.js vue runtime-dom size-check -p -f global",
     "lint": "eslint --ext .ts packages/*/src/**",
     "format": "prettier --write --parser typescript \"packages/**/*.ts?(x)\"",
+    "test:ref": "jest reactivity/__tests__/ref.spec.ts",
     "test": "node scripts/build.js vue -f global -d && jest --runInBand",
     "test-dts": "node scripts/build.js shared reactivity runtime-core runtime-dom -dt -f esm-bundler && yarn test-dts-only",
     "test-dts-only": "tsc -p ./test-dts/tsconfig.json && tsc -p ./test-dts/tsconfig.build.json",
