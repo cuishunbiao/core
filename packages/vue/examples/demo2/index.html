@@ -1,0 +1,34 @@
+<script src="../../dist/vue.global.js"></script>
+
+<div id="demo">
+    <h1>{{one}}</h1>
+    <h2>{{two}}</h2>
+</div>
+
+<script>
+    const { createApp, ref, effect, watchEffect } = Vue
+
+
+    createApp({
+        setup() {
+
+            const one = ref(1)
+            const two = ref(1)
+            // watchEffect(() => {
+            // })
+
+            // effect(() => {
+            //     one++
+            // })
+
+            setTimeout(()=>{
+                two+=2
+            },2000)
+
+            return {
+                one,
+                two
+            }
+        }
+    }).mount('#demo')
+</script>
