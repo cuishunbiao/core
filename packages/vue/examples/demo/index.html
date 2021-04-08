@@ -5,23 +5,24 @@
     }
 </style>
 <div id="indexDemo">
-    {{num}}/{{doubbleCount}}
+    {{num}}
+    <button @click="numAdd">加一</button>
 </div>
 <script>
-    const { ref, createApp, computed, reactive, toRefs } = Vue
+    const { ref, createApp} = Vue
     createApp({
         setup() {
-            const num = ref(1);
-            const doubbleCount = computed(()=>num.value+1);
+            const num = ref(false);
+            console.log(num)
 
-            console.log(doubbleCount.value);
+            const numAdd = ()=>{
+                num.value++
+            }
 
             return{
                 num,
-                doubbleCount
+                numAdd
             }
         }
-    }, {
-        title: 'index.html'
     }).mount("#indexDemo")
 </script>

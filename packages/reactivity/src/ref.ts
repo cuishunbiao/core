@@ -32,6 +32,7 @@ const convert = <T extends unknown>(val: T): T =>
 
 export function isRef<T>(r: Ref<T> | unknown): r is Ref<T>
 export function isRef(r: any): r is Ref {
+  debugger
   return Boolean(r && r.__v_isRef === true)
 }
 
@@ -55,17 +56,19 @@ class RefImpl<T> {
   private _value: T
 
   public readonly __v_isRef = true
-
   constructor(private _rawValue: T, public readonly _shallow = false) {
+    debugger
     this._value = _shallow ? _rawValue : convert(_rawValue)
   }
 
   get value() {
+    debugger
     track(toRaw(this), TrackOpTypes.GET, 'value')
     return this._value
   }
 
   set value(newVal) {
+    debugger
     if (hasChanged(toRaw(newVal), this._rawValue)) {
       this._rawValue = newVal
       this._value = this._shallow ? newVal : convert(newVal)
@@ -75,6 +78,7 @@ class RefImpl<T> {
 }
 
 function createRef(rawValue: unknown, shallow = false) {
+  //判断是不是 ref
   if (isRef(rawValue)) {
     return rawValue
   }
