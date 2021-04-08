@@ -1,0 +1,27 @@
+<script src="../../dist/vue.global.js"></script>
+<style>
+    [v-cloak] {
+        display: none;
+    }
+</style>
+<div id="indexDemo">
+    {{num}}/{{doubbleCount}}
+</div>
+<script>
+    const { ref, createApp, computed, reactive, toRefs } = Vue
+    createApp({
+        setup() {
+            const num = ref(1);
+            const doubbleCount = computed(()=>num.value+1);
+
+            console.log(doubbleCount.value);
+
+            return{
+                num,
+                doubbleCount
+            }
+        }
+    }, {
+        title: 'index.html'
+    }).mount("#indexDemo")
+</script>

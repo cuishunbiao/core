@@ -14,6 +14,7 @@ import { nodeOps } from './nodeOps'
 import { patchProp, forcePatchProp } from './patchProp'
 // Importing from the compiler, will be tree-shaken in prod
 import { isFunction, isString, isHTMLTag, isSVGTag, extend } from '@vue/shared'
+import { debug } from 'console'
 
 declare module '@vue/reactivity' {
   export interface RefUnwrapBailTypes {
@@ -58,10 +59,10 @@ export const createApp = ((...args) => {
     injectNativeTagCheck(app)
     injectCustomElementCheck(app)
   }
-
   const { mount } = app
+  //重写 mount 方法
   app.mount = (containerOrSelector: Element | ShadowRoot | string): any => {
-    const container = normalizeContainer(containerOrSelector)
+    const container = normalizeContainer(containerOrSelector) //标准化容器
     if (!container) return
     const component = app._component
     if (!isFunction(component) && !component.render && !component.template) {
