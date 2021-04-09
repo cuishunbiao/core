@@ -115,7 +115,6 @@ const camelizeRE = /-(\w)/g
  */
 export const camelize = cacheStringFunction(
   (str: string): string => {
-    debugger
     return str.replace(camelizeRE, (_, c) => (c ? c.toUpperCase() : ''))
   }
 )

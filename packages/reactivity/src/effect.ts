@@ -139,13 +139,17 @@ export function resetTracking() {
 }
 
 export function track(target: object, type: TrackOpTypes, key: unknown) {
+  debugger
   if (!shouldTrack || activeEffect === undefined) {
     return
   }
+  //通过 WeakMap 对象来存储键值对。键必须是对象，值可以是任意。
   let depsMap = targetMap.get(target)
+  //获取不到键，就添加一个
   if (!depsMap) {
     targetMap.set(target, (depsMap = new Map()))
   }
+  //如果当前 depsMap 没有 key ，则就需要添加一个 key
   let dep = depsMap.get(key)
   if (!dep) {
     depsMap.set(key, (dep = new Set()))
@@ -172,6 +176,7 @@ export function trigger(
   oldValue?: unknown,
   oldTarget?: Map<unknown, unknown> | Set<unknown>
 ) {
+  debugger
   const depsMap = targetMap.get(target)
   if (!depsMap) {
     // never been tracked
