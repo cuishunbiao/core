@@ -63,7 +63,6 @@ export function triggerRefValue(ref: RefBase<any>, newVal?: any) {
 
 export function isRef<T>(r: Ref<T> | unknown): r is Ref<T>
 export function isRef(r: any): r is Ref {
-  debugger
   return Boolean(r && r.__v_isRef === true)
 }
 
@@ -97,6 +96,7 @@ function createRef(rawValue: unknown, shallow: boolean) {
 }
 
 class RefImpl<T> {
+  //私有属性 _value
   private _value: T
   private _rawValue: T
 

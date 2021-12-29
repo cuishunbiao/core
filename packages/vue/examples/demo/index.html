@@ -5,23 +5,22 @@
     }
 </style>
 <div id="indexDemo">
-    {{num}}
-    <button @click="numAdd">加一</button>
+    {{web}}
+    <button @click="webChangeFn">加一</button>
 </div>
 <script>
     const { ref, createApp} = Vue
     createApp({
         setup() {
-            const num = ref(false);
-            console.log(num)
+            const web = ref('web');
 
-            const numAdd = ()=>{
-                num.value++
+            const webChangeFn = ()=>{
+                web.value = 'web1'
             }
 
             return{
-                num,
-                numAdd
+                web,
+                webChangeFn
             }
         }
     }).mount("#indexDemo")
